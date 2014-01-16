@@ -15,23 +15,26 @@ namespace SourceCodeWaterMark
     public class FileExtensionAndCodeSymbol
     {
         private Dictionary<string, Tuple<string, string>> extensions = new Dictionary<string, Tuple<string, string>>();
-        private const string fileWithExtensionsName = "ExtensionsAndCodeSymbols.txt";
         private bool fileWasLoaded = true;
 
-        public FileExtensionAndCodeSymbol()
+        public FileExtensionAndCodeSymbol(string fileSettingsPath)
         {
-            ReadSettingFile();
-        }
-
-        private void ReadSettingFile(){
-            // load hashtable with extensions and code symbols
-            string absPath = Environment.CurrentDirectory + "\\" + fileWithExtensionsName;
-            if(!File.Exists(absPath)){
+            if (!File.Exists(fileSettingsPath))
+            {
                 fileWasLoaded = false;
                 return;
             }
 
-            using (FileStream fs = new FileStream(absPath,
+            ReadSettingFile(fileSettingsPath);
+        }
+
+        /// <summary>
+        /// Load hashtable with extensions and code symbols.
+        /// </summary>
+        /// <param name="fileSettingsPath"></param>
+        private void ReadSettingFile(string fileSettingsPath)
+        {
+            using (FileStream fs = new FileStream(fileSettingsPath,
                                       FileMode.Open,
                                       FileAccess.Read,
                                       FileShare.Read))
@@ -41,12 +44,14 @@ namespace SourceCodeWaterMark
                     while (sr.Peek() >= 0)
                     {
                         string line = sr.ReadLine();
-                        if (line.Contains(' ')) {
+                        if (line.Contains(' '))
+                        {
                             List<string> words = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                            
-                            if(extensions.ContainsKey(words[0]))
+
+                            // If the extension already exists, it is not overwritten
+                            if (extensions.ContainsKey(words[0]))
                                 continue;
-                            
+
                             Tuple<string, string> commentSymbol;
                             if (words.Count == 2)
                                 commentSymbol = new Tuple<string, string>(words[1], String.Empty);
@@ -57,16 +62,17 @@ namespace SourceCodeWaterMark
 
                             extensions.Add(words[0], commentSymbol);
                         }
-                        //Console.WriteLine(sr.ReadLine());
                     }
                 }
             }
         }
 
-        public Dictionary<string, Tuple<string, string>> Extensions{
-            get {
-                return extensions;    
-            }  
+        public Dictionary<string, Tuple<string, string>> Extensions
+        {
+            get
+            {
+                return extensions;
+            }
         }
 
         public bool SettingFileWasLoaded

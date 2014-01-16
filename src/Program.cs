@@ -54,13 +54,13 @@ namespace SourceCodeWaterMark
                 Console.Write("# Provide release number: ");
                 releaseNumber = Console.ReadLine();
 
-                Match releaseNumberMatch = Regex.Match(releaseNumber, @"([0-9]+[\.]?)+", RegexOptions.IgnoreCase);
+                Match releaseNumberMatch = Regex.Match(releaseNumber, @"\d+(?:\.\d+)+", RegexOptions.IgnoreCase);
                 
                 if (String.IsNullOrEmpty(releaseNumber))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Release number is invalid.");
-                    Console.WriteLine("Use a valid format (1, 1.2, 1.3.0,...)");
+                    Console.WriteLine("Use a valid format (1.0, 7.45.3,...)");
                     continue;
                 }
 
@@ -68,7 +68,7 @@ namespace SourceCodeWaterMark
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Release number is invalid.");
-                    Console.WriteLine("Use a valid format (1, 1.2, 1.3.0,...)");
+                    Console.WriteLine("Use a valid format (1.0, 7.45.3,...)");
                     continue;
                 }
 
@@ -109,7 +109,9 @@ namespace SourceCodeWaterMark
             Console.WriteLine(String.Empty);
             Console.WriteLine("# Start to watermark files with release v." + releaseNumber);
             Console.WriteLine("# Read valid extension list");
-            FileExtensionAndCodeSymbol fileSettings = new FileExtensionAndCodeSymbol();
+            const string fileWithExtensionsName = "ExtensionsAndCodeSymbols.txt";
+            string fileSettingsAbsPath = Environment.CurrentDirectory + "\\" + fileWithExtensionsName;
+            FileExtensionAndCodeSymbol fileSettings = new FileExtensionAndCodeSymbol(fileSettingsAbsPath);
 
             if (fileSettings.SettingFileWasLoaded)
             {
