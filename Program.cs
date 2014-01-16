@@ -54,7 +54,7 @@ namespace SourceCodeWaterMark
                 Console.Write("# Provide release number: ");
                 releaseNumber = Console.ReadLine();
 
-                Match releaseNumberMatch = Regex.Match(releaseNumber, @"\d+(?:\.\d+)+$", RegexOptions.IgnoreCase);
+                Match releaseNumberMatch = Regex.Match(releaseNumber, @"([0-9]+[\.]?)+", RegexOptions.IgnoreCase);
                 
                 if (String.IsNullOrEmpty(releaseNumber))
                 {
@@ -109,7 +109,13 @@ namespace SourceCodeWaterMark
             Console.WriteLine(String.Empty);
             Console.WriteLine("# Start to watermark files with release v." + releaseNumber);
             Console.WriteLine("# Read valid extension list");
-            
+            FileExtensionAndCodeSymbol fileSettings = new FileExtensionAndCodeSymbol();
+            Dictionary<string, Tuple<string, string>> ext = fileSettings.Extensions;
+
+            foreach (KeyValuePair<string, Tuple<string, string>> kvp in ext) {
+                Console.WriteLine(kvp.Key + " - " + kvp.Value.Item1 + " - " + kvp.Value.Item2);
+            }
+
             Console.Write("# Press any key to exit...");
             Console.ReadLine();            
         }
