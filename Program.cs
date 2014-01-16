@@ -110,10 +110,24 @@ namespace SourceCodeWaterMark
             Console.WriteLine("# Start to watermark files with release v." + releaseNumber);
             Console.WriteLine("# Read valid extension list");
             FileExtensionAndCodeSymbol fileSettings = new FileExtensionAndCodeSymbol();
-            Dictionary<string, Tuple<string, string>> ext = fileSettings.Extensions;
 
-            foreach (KeyValuePair<string, Tuple<string, string>> kvp in ext) {
-                Console.WriteLine(kvp.Key + " - " + kvp.Value.Item1 + " - " + kvp.Value.Item2);
+            if (fileSettings.SettingFileWasLoaded)
+            {
+                Dictionary<string, Tuple<string, string>> ext = fileSettings.Extensions;
+
+                foreach (KeyValuePair<string, Tuple<string, string>> kvp in ext)
+                {
+                    Console.WriteLine(kvp.Key + " - " + kvp.Value.Item1 + " - " + kvp.Value.Item2);
+                }
+
+                FolderToWatermark wFolder = new FolderToWatermark(folderPath);
+                Console.WriteLine("# Files to process: " + wFolder.FilesToProcess);
+            }
+            else {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("# Settings file could not be loaded or is invalid.");
+                Console.WriteLine("# Settings file should be called ExtensionsAndCodeSymbols.txt and located next to the executable.");
+                Console.ForegroundColor = ConsoleColor.White;
             }
 
             Console.Write("# Press any key to exit...");

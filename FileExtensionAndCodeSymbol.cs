@@ -68,5 +68,13 @@ namespace SourceCodeWaterMark
                 return extensions;    
             }  
         }
+
+        public bool SettingFileWasLoaded
+        {
+            get
+            {
+                return fileWasLoaded;
+            }
+        }
     }
 }
