@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SourceCodeWaterMark
 {
@@ -10,8 +12,9 @@ namespace SourceCodeWaterMark
     {
         private string _folderPath = String.Empty;
         private bool _folderPathIsValid = true;
-        private int _filesToProcess = 0;
+        private int _filesToProcessCount = 0;
         private CodeCommentSymbols _codeComments;
+        FileInfo[] _filesToProcess;
 
         public FolderToWatermark(string folderPath, CodeCommentSymbols codeComments)
         {
@@ -32,27 +35,47 @@ namespace SourceCodeWaterMark
 
             _folderPath = folderPath;
 
-            GetSupportedFiles();
+            ReadFilesInsideFolder();
+            AddWaterMarkToFiles();
         }
 
-        private void GetSupportedFiles() {
-            DirectoryInfo di = new DirectoryInfo(_folderPath);
-            FileInfo[] fi = _codeComments.FileExtensions
-                .SelectMany(i => di.GetFiles(i, SearchOption.AllDirectories))
+        private void ReadFilesInsideFolder()
+        {
+            if (!_folderPathIsValid)
+                return;
+
+            DirectoryInfo dirInfo = new DirectoryInfo(_folderPath);
+            _filesToProcess = _codeComments.FileExtensions
+                .SelectMany(i => dirInfo.GetFiles(i, SearchOption.AllDirectories))
                 .Distinct().ToArray();
-            _filesToProcess = fi.Count();
+            _filesToProcessCount = _filesToProcess.Count();
         }
 
-        public int FilesToProcess
+        public int FilesToProcessCount
         {
             get{
-                return _filesToProcess;
+                return _filesToProcessCount;
             }
         }
 
-        public void AddWaterMark() {
+        public void AddWaterMarkToFiles() {
+
+            if (!_folderPathIsValid)
+                return;
+
+            // TODO
             // what if the release number already exists inside a file?
             // what if some file raises an error when reading or writing?
+            
+            if (_filesToProcess != null && _filesToProcess.Count() > 0)
+            {
+                // Divide work between multiple threads 
+                Parallel.ForEach(_filesToProcess, fileInfo =>
+                {
+
+                    Console.WriteLine(Thread.CurrentThread.ManagedThreadId + " - " + fileInfo.Name);
+                });
+            }
         }
     }
 }
