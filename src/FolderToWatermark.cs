@@ -11,9 +11,10 @@ namespace SourceCodeWaterMark
         private string _folderPath = String.Empty;
         private bool _folderPathIsValid = true;
         private int _filesToProcess = 0;
-        private FileExtensionAndCodeSymbol _fileSettings;
+        private CodeCommentSymbols _codeComments;
 
-        public FolderToWatermark(string folderPath, FileExtensionAndCodeSymbol fileSettings) {
+        public FolderToWatermark(string folderPath, CodeCommentSymbols codeComments)
+        {
             
             if (String.IsNullOrEmpty(folderPath)) {
                 _folderPathIsValid = false;
@@ -26,8 +27,8 @@ namespace SourceCodeWaterMark
                 return;
             }
 
-            if (fileSettings != null)
-                _fileSettings = fileSettings;
+            if (codeComments != null)
+                _codeComments = codeComments;
 
             _folderPath = folderPath;
 
@@ -36,7 +37,7 @@ namespace SourceCodeWaterMark
 
         private void GetSupportedFiles() {
             DirectoryInfo di = new DirectoryInfo(_folderPath);
-            FileInfo[] fi = _fileSettings.Extensions
+            FileInfo[] fi = _codeComments.FileExtensions
                 .SelectMany(i => di.GetFiles(i, SearchOption.AllDirectories))
                 .Distinct().ToArray();
             _filesToProcess = fi.Count();

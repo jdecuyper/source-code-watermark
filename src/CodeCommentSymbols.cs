@@ -8,22 +8,22 @@ using System.Text.RegularExpressions;
 namespace SourceCodeWaterMark
 {
     /// <summary>
-    /// Load all supported file extensions and their associated code symbols.
-    /// For instance, *.cs file will use the following code symbol right before 
-    /// the watermark: //
-    /// These settings can be edited inside the following file: ExtensionsAndCodeSymbols.txt
+    /// Load all supported file extensions and their associated comment symbols.
+    /// For instance, *.css file will use the following comment symbol:
+    /// /* watermark */
+    /// These settings can be edited inside the following file: CommentSymbols.txt
     /// </summary>
-    public class FileExtensionAndCodeSymbol
+    public class CodeCommentSymbols
     {
-        private Dictionary<string, Tuple<string, string>> extensions = new Dictionary<string, Tuple<string, string>>();
-        private bool fileWasLoaded = true;
-        private string[] fileExtensionsRegex;
+        private Dictionary<string, Tuple<string, string>> _commentSymbols = new Dictionary<string, Tuple<string, string>>();
+        private bool _settingFileWasLoaded = false;
+        private string[] _fileExtensionsRegex;
 
-        public FileExtensionAndCodeSymbol(string fileSettingsPath)
+        public CodeCommentSymbols(string fileSettingsPath)
         {
             if (!File.Exists(fileSettingsPath))
             {
-                fileWasLoaded = false;
+                _settingFileWasLoaded = false;
                 return;
             }
 
@@ -31,11 +31,13 @@ namespace SourceCodeWaterMark
         }
 
         /// <summary>
-        /// Load hashtable with extensions and code symbols.
+        /// Load hashtable with extensions and commment symbols.
         /// </summary>
         /// <param name="fileSettingsPath"></param>
         private void ReadSettingFile(string fileSettingsPath)
         {
+            _settingFileWasLoaded = true;
+
             using (FileStream fs = new FileStream(fileSettingsPath,
                                       FileMode.Open,
                                       FileAccess.Read,
@@ -55,34 +57,34 @@ namespace SourceCodeWaterMark
                             string endCommentSymbol = words.Count == 2 ? String.Empty : words[2];
 
                             // If the extension already exists, it is not overwritten
-                            if (extensions.ContainsKey(fileExtension))
+                            if (_commentSymbols.ContainsKey(fileExtension))
                                 continue;
 
                             Tuple<string, string> commentSymbol;
                             commentSymbol = new Tuple<string, string>(startCommentSymbol, endCommentSymbol);
-                            extensions.Add(fileExtension, commentSymbol);
+                            _commentSymbols.Add(fileExtension, commentSymbol);
                         }
                     }
                 }
 
                 // Keep track of the support file extensions
-                fileExtensionsRegex = extensions.Keys.Select(ext => String.Format("*.{0}", ext)).ToArray();
+                _fileExtensionsRegex = _commentSymbols.Keys.Select(ext => String.Format("*.{0}", ext)).ToArray();
             }
         }
 
-        public Dictionary<string, Tuple<string, string>> ExtensionsAndCodeSymbols
+        public Dictionary<string, Tuple<string, string>> CommentSymbols
         {
             get
             {
-                return extensions;
+                return _commentSymbols;
             }
         }
 
-        public string[] Extensions
+        public string[] FileExtensions
         {
             get
             {
-                return fileExtensionsRegex;
+                return _fileExtensionsRegex;
             }
         }
 
@@ -90,7 +92,7 @@ namespace SourceCodeWaterMark
         {
             get
             {
-                return fileWasLoaded;
+                return _settingFileWasLoaded;
             }
         }
     }

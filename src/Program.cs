@@ -112,21 +112,21 @@ namespace SourceCodeWaterMark
             Console.WriteLine("# Read valid extension list");
             const string fileWithExtensionsName = "ExtensionsAndCodeSymbols.txt";
             string fileSettingsAbsPath = Environment.CurrentDirectory + "\\" + fileWithExtensionsName;
-            FileExtensionAndCodeSymbol fileSettings = new FileExtensionAndCodeSymbol(fileSettingsAbsPath);
+            CodeCommentSymbols codeComments = new CodeCommentSymbols(fileSettingsAbsPath);
 
-            if (fileSettings.SettingFileWasLoaded && fileSettings.ExtensionsAndCodeSymbols.Count > 0)
+            if (codeComments.SettingFileWasLoaded && codeComments.CommentSymbols.Count > 0)
             {
-                Dictionary<string, Tuple<string, string>> ext = fileSettings.ExtensionsAndCodeSymbols;
+                Dictionary<string, Tuple<string, string>> ext = codeComments.CommentSymbols;
 
                 foreach (KeyValuePair<string, Tuple<string, string>> kvp in ext)
                 {
                     Console.WriteLine(kvp.Key + " - " + kvp.Value.Item1 + " - " + kvp.Value.Item2);
                 }
 
-                FolderToWatermark wFolder = new FolderToWatermark(folderPath, fileSettings);
+                FolderToWatermark wFolder = new FolderToWatermark(folderPath, codeComments);
                 Console.WriteLine("# Files to process: " + wFolder.FilesToProcess);
             }
-            else if (fileSettings.SettingFileWasLoaded && fileSettings.ExtensionsAndCodeSymbols.Count == 0)
+            else if (codeComments.SettingFileWasLoaded && codeComments.CommentSymbols.Count == 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("# Settings file is empty or invalid.");

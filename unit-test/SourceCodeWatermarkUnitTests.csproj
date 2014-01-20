@@ -63,13 +63,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="nunit\nunit.framework.dll" />
-    <Content Include="Ressources\ExtCodeSymbols-Tabs.txt" />
-    <Content Include="Ressources\ExtCodeSymbols-ExtraEmptyLines.txt" />
-    <Content Include="Ressources\ExtCodeSymbols-1-ExtraSpaces.txt" />
-    <Content Include="Ressources\ExtCodeSymbols-2.txt" />
-    <Content Include="Ressources\ExtCodeSymbols-1.txt" />
-    <Content Include="Ressources\ExtCodeSymbols-InvalidFormat.txt" />
-    <Content Include="Ressources\ExtCodeSymbols-Empty.txt" />
+    <Content Include="Ressources\CommentSymbols-Tabs.txt" />
+    <Content Include="Ressources\CommentSymbols-ExtraEmptyLines.txt" />
+    <Content Include="Ressources\CommentSymbols-1-ExtraSpaces.txt" />
+    <Content Include="Ressources\CommentSymbols-2.txt" />
+    <Content Include="Ressources\CommentSymbols-1.txt" />
+    <Content Include="Ressources\CommentSymbols-InvalidFormat.txt" />
+    <Content Include="Ressources\CommentSymbols-Empty.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

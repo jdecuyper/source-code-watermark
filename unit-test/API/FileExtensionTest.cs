@@ -13,88 +13,88 @@ namespace SourceCodeWatermarkUnitTests.API
         [Test]
         public void SettingsFileDoesNotExist()
         {
-            FileExtensionAndCodeSymbol fileSettings = new FileExtensionAndCodeSymbol("file does not exist");
+            CodeCommentSymbols fileSettings = new CodeCommentSymbols("file does not exist");
             Assert.IsFalse(fileSettings.SettingFileWasLoaded);
         }
 
         [Test]
         public void SettingsFileExists()
         {
-            FileExtensionAndCodeSymbol fileSettings = new FileExtensionAndCodeSymbol(Environment.CurrentDirectory + "\\..\\..\\Ressources\\ExtCodeSymbols-Empty.txt");
+            CodeCommentSymbols fileSettings = new CodeCommentSymbols(Environment.CurrentDirectory + "\\..\\..\\Ressources\\CommentSymbols-Empty.txt");
             Assert.IsTrue(fileSettings.SettingFileWasLoaded);
         }
 
         [Test]
         public void SettingsFileEmpty()
         {
-            FileExtensionAndCodeSymbol fileSettings = new FileExtensionAndCodeSymbol(Environment.CurrentDirectory + "\\..\\..\\Ressources\\ExtCodeSymbols-Empty.txt");
-            Assert.AreEqual(0, fileSettings.ExtensionsAndCodeSymbols.Count());
+            CodeCommentSymbols fileSettings = new CodeCommentSymbols(Environment.CurrentDirectory + "\\..\\..\\Ressources\\CommentSymbols-Empty.txt");
+            Assert.AreEqual(0, fileSettings.CommentSymbols.Count());
         }
 
         [Test]
         public void SettingsFileInvalidFormat()
         {
-            FileExtensionAndCodeSymbol fileSettings = new FileExtensionAndCodeSymbol(Environment.CurrentDirectory + "\\..\\..\\Ressources\\ExtCodeSymbols-InvalidFormat.txt");
-            Assert.AreEqual(0, fileSettings.ExtensionsAndCodeSymbols.Count());
+            CodeCommentSymbols fileSettings = new CodeCommentSymbols(Environment.CurrentDirectory + "\\..\\..\\Ressources\\CommentSymbols-InvalidFormat.txt");
+            Assert.AreEqual(0, fileSettings.CommentSymbols.Count());
         }
 
         [Test]
         public void SettingsFileOne()
         {
-            FileExtensionAndCodeSymbol fileSettings = new FileExtensionAndCodeSymbol(Environment.CurrentDirectory + "\\..\\..\\Ressources\\ExtCodeSymbols-1.txt");
-            Assert.AreEqual(1, fileSettings.ExtensionsAndCodeSymbols.Count());
-            Assert.IsNotNull(fileSettings.ExtensionsAndCodeSymbols["css"]);
-            Assert.AreEqual("/*", fileSettings.ExtensionsAndCodeSymbols["css"].Item1);
-            Assert.AreEqual("*/", fileSettings.ExtensionsAndCodeSymbols["css"].Item2);
+            CodeCommentSymbols fileSettings = new CodeCommentSymbols(Environment.CurrentDirectory + "\\..\\..\\Ressources\\CommentSymbols-1.txt");
+            Assert.AreEqual(1, fileSettings.CommentSymbols.Count());
+            Assert.IsNotNull(fileSettings.CommentSymbols["css"]);
+            Assert.AreEqual("/*", fileSettings.CommentSymbols["css"].Item1);
+            Assert.AreEqual("*/", fileSettings.CommentSymbols["css"].Item2);
         }
 
         [Test]
         public void SettingsFileOneWithExtraSpaces()
         {
-            FileExtensionAndCodeSymbol fileSettings = new FileExtensionAndCodeSymbol(Environment.CurrentDirectory + "\\..\\..\\Ressources\\ExtCodeSymbols-1-ExtraSpaces.txt");
-            Assert.AreEqual(1, fileSettings.ExtensionsAndCodeSymbols.Count());
-            Assert.IsNotNull(fileSettings.ExtensionsAndCodeSymbols["css"]);
-            Assert.AreEqual("/*", fileSettings.ExtensionsAndCodeSymbols["css"].Item1);
-            Assert.AreEqual("*/", fileSettings.ExtensionsAndCodeSymbols["css"].Item2);
+            CodeCommentSymbols fileSettings = new CodeCommentSymbols(Environment.CurrentDirectory + "\\..\\..\\Ressources\\CommentSymbols-1-ExtraSpaces.txt");
+            Assert.AreEqual(1, fileSettings.CommentSymbols.Count());
+            Assert.IsNotNull(fileSettings.CommentSymbols["css"]);
+            Assert.AreEqual("/*", fileSettings.CommentSymbols["css"].Item1);
+            Assert.AreEqual("*/", fileSettings.CommentSymbols["css"].Item2);
         }
 
         [Test]
         public void SettingsFileTwo()
         {
-            FileExtensionAndCodeSymbol fileSettings = new FileExtensionAndCodeSymbol(Environment.CurrentDirectory + "\\..\\..\\Ressources\\ExtCodeSymbols-2.txt");
-            Assert.AreEqual(2, fileSettings.ExtensionsAndCodeSymbols.Count());
-            Assert.IsNotNull(fileSettings.ExtensionsAndCodeSymbols["cs"]);
-            Assert.AreEqual("//", fileSettings.ExtensionsAndCodeSymbols["cs"].Item1);
-            Assert.AreEqual(String.Empty, fileSettings.ExtensionsAndCodeSymbols["cs"].Item2);
+            CodeCommentSymbols fileSettings = new CodeCommentSymbols(Environment.CurrentDirectory + "\\..\\..\\Ressources\\CommentSymbols-2.txt");
+            Assert.AreEqual(2, fileSettings.CommentSymbols.Count());
+            Assert.IsNotNull(fileSettings.CommentSymbols["cs"]);
+            Assert.AreEqual("//", fileSettings.CommentSymbols["cs"].Item1);
+            Assert.AreEqual(String.Empty, fileSettings.CommentSymbols["cs"].Item2);
 
-            Assert.IsNotNull(fileSettings.ExtensionsAndCodeSymbols["js"]);
-            Assert.AreEqual("/*", fileSettings.ExtensionsAndCodeSymbols["js"].Item1);
-            Assert.AreEqual("*/", fileSettings.ExtensionsAndCodeSymbols["js"].Item2);
+            Assert.IsNotNull(fileSettings.CommentSymbols["js"]);
+            Assert.AreEqual("/*", fileSettings.CommentSymbols["js"].Item1);
+            Assert.AreEqual("*/", fileSettings.CommentSymbols["js"].Item2);
         }
 
         [Test]
         public void SettingsFileExtraEmptyLines()
         {
-            FileExtensionAndCodeSymbol fileSettings = new FileExtensionAndCodeSymbol(Environment.CurrentDirectory + "\\..\\..\\Ressources\\ExtCodeSymbols-ExtraEmptyLines.txt");
-            Assert.AreEqual(6, fileSettings.ExtensionsAndCodeSymbols.Count());
-            Assert.IsNotNull(fileSettings.ExtensionsAndCodeSymbols["master"]);
-            Assert.AreEqual(fileSettings.ExtensionsAndCodeSymbols["master"].Item1, "<%--");
-            Assert.AreEqual(fileSettings.ExtensionsAndCodeSymbols["master"].Item2, "--%>");
+            CodeCommentSymbols fileSettings = new CodeCommentSymbols(Environment.CurrentDirectory + "\\..\\..\\Ressources\\CommentSymbols-ExtraEmptyLines.txt");
+            Assert.AreEqual(6, fileSettings.CommentSymbols.Count());
+            Assert.IsNotNull(fileSettings.CommentSymbols["master"]);
+            Assert.AreEqual(fileSettings.CommentSymbols["master"].Item1, "<%--");
+            Assert.AreEqual(fileSettings.CommentSymbols["master"].Item2, "--%>");
         }
 
         [Test]
         public void SettingsFileTabsBetweenItems()
         {
-            FileExtensionAndCodeSymbol fileSettings = new FileExtensionAndCodeSymbol(Environment.CurrentDirectory + "\\..\\..\\Ressources\\ExtCodeSymbols-Tabs.txt");
-            Assert.AreEqual(2, fileSettings.ExtensionsAndCodeSymbols.Count());
+            CodeCommentSymbols fileSettings = new CodeCommentSymbols(Environment.CurrentDirectory + "\\..\\..\\Ressources\\CommentSymbols-Tabs.txt");
+            Assert.AreEqual(2, fileSettings.CommentSymbols.Count());
             
-            Assert.IsNotNull(fileSettings.ExtensionsAndCodeSymbols["css"]);
-            Assert.AreEqual(fileSettings.ExtensionsAndCodeSymbols["css"].Item1, "/*");
-            Assert.AreEqual(fileSettings.ExtensionsAndCodeSymbols["css"].Item2, "*/");
+            Assert.IsNotNull(fileSettings.CommentSymbols["css"]);
+            Assert.AreEqual(fileSettings.CommentSymbols["css"].Item1, "/*");
+            Assert.AreEqual(fileSettings.CommentSymbols["css"].Item2, "*/");
 
-            Assert.IsNotNull(fileSettings.ExtensionsAndCodeSymbols["cs"]);
-            Assert.AreEqual(fileSettings.ExtensionsAndCodeSymbols["cs"].Item1, "//");
-            Assert.AreEqual(fileSettings.ExtensionsAndCodeSymbols["cs"].Item2, String.Empty);
+            Assert.IsNotNull(fileSettings.CommentSymbols["cs"]);
+            Assert.AreEqual(fileSettings.CommentSymbols["cs"].Item1, "//");
+            Assert.AreEqual(fileSettings.CommentSymbols["cs"].Item2, String.Empty);
         }
         
     }

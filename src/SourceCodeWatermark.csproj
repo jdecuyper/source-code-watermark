@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileExtensionAndCodeSymbol.cs" />
+    <Compile Include="CodeCommentSymbols.cs" />
     <Compile Include="FolderToWatermark.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,7 +58,7 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ExtensionsAndCodeSymbols.txt" />
+    <Content Include="CommentSymbols.txt" />
     <Content Include="Watermark.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
