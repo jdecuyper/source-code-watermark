@@ -18,6 +18,7 @@ namespace SourceCodeWaterMark
         private Dictionary<string, Tuple<string, string>> _commentSymbols = new Dictionary<string, Tuple<string, string>>();
         private bool _settingFileWasLoaded = false;
         private string[] _fileExtensionsRegex;
+        public const string SETTINGS_FILE_NAME = "CommentSymbols.txt";
 
         public CodeCommentSymbols(string fileSettingsPath)
         {
