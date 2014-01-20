@@ -110,8 +110,7 @@ namespace SourceCodeWaterMark
             Console.WriteLine(String.Empty);
             Console.WriteLine("# Start to watermark files with release v." + releaseNumber);
             Console.WriteLine("# Read valid extension list");
-            const string fileWithExtensionsName = "ExtensionsAndCodeSymbols.txt";
-            string fileSettingsAbsPath = Environment.CurrentDirectory + "\\" + fileWithExtensionsName;
+            string fileSettingsAbsPath = Environment.CurrentDirectory + "\\" + CodeCommentSymbols.SETTINGS_FILE_NAME;
             CodeCommentSymbols codeComments = new CodeCommentSymbols(fileSettingsAbsPath);
 
             if (codeComments.SettingFileWasLoaded && codeComments.CommentSymbols.Count > 0)
@@ -124,13 +123,13 @@ namespace SourceCodeWaterMark
                 }
 
                 FolderToWatermark wFolder = new FolderToWatermark(folderPath, codeComments);
-                Console.WriteLine("# Files to process: " + wFolder.FilesToProcess);
+                Console.WriteLine("# Files to process: " + wFolder.FilesToProcessCount);
             }
             else if (codeComments.SettingFileWasLoaded && codeComments.CommentSymbols.Count == 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("# Settings file is empty or invalid.");
-                Console.WriteLine("# Settings file should be called ExtensionsAndCodeSymbols.txt and located next to the executable.");
+                Console.WriteLine(String.Format("# Settings file should be called {0} and located next to the executable.", CodeCommentSymbols.SETTINGS_FILE_NAME));
                 Console.WriteLine("# It should contain at least one valid file extension and comment symbol, for instance:");
                 Console.WriteLine(String.Empty); 
                 Console.WriteLine("  cs   //");
@@ -142,7 +141,7 @@ namespace SourceCodeWaterMark
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("# Settings file could not be loaded or is invalid.");
-                Console.WriteLine("# Settings file should be called ExtensionsAndCodeSymbols.txt and located next to the executable.");
+                Console.WriteLine(String.Format("# Settings file should be called {0} and located next to the executable.", CodeCommentSymbols.SETTINGS_FILE_NAME));
                 Console.ForegroundColor = ConsoleColor.White;
             }
 
