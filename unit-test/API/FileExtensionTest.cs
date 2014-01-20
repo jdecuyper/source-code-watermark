@@ -81,5 +81,21 @@ namespace SourceCodeWatermarkUnitTests.API
             Assert.AreEqual(fileSettings.ExtensionsAndCodeSymbols["master"].Item1, "<%--");
             Assert.AreEqual(fileSettings.ExtensionsAndCodeSymbols["master"].Item2, "--%>");
         }
+
+        [Test]
+        public void SettingsFileTabsBetweenItems()
+        {
+            FileExtensionAndCodeSymbol fileSettings = new FileExtensionAndCodeSymbol(Environment.CurrentDirectory + "\\..\\..\\Ressources\\ExtCodeSymbols-Tabs.txt");
+            Assert.AreEqual(2, fileSettings.ExtensionsAndCodeSymbols.Count());
+            
+            Assert.IsNotNull(fileSettings.ExtensionsAndCodeSymbols["css"]);
+            Assert.AreEqual(fileSettings.ExtensionsAndCodeSymbols["css"].Item1, "/*");
+            Assert.AreEqual(fileSettings.ExtensionsAndCodeSymbols["css"].Item2, "*/");
+
+            Assert.IsNotNull(fileSettings.ExtensionsAndCodeSymbols["cs"]);
+            Assert.AreEqual(fileSettings.ExtensionsAndCodeSymbols["cs"].Item1, "//");
+            Assert.AreEqual(fileSettings.ExtensionsAndCodeSymbols["cs"].Item2, String.Empty);
+        }
+        
     }
 }

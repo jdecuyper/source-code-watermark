@@ -51,19 +51,15 @@ namespace SourceCodeWaterMark
                         if (words.Count >= 2)
                         {
                             string fileExtension = words[0];
+                            string startCommentSymbol = words[1];
+                            string endCommentSymbol = words.Count == 2 ? String.Empty : words[2];
 
                             // If the extension already exists, it is not overwritten
                             if (extensions.ContainsKey(fileExtension))
                                 continue;
 
                             Tuple<string, string> commentSymbol;
-                            if (words.Count == 2)
-                                commentSymbol = new Tuple<string, string>(words[1], String.Empty);
-                            else if (words.Count == 3)
-                                commentSymbol = new Tuple<string, string>(words[1], words[2]);
-                            else
-                                commentSymbol = new Tuple<string, string>(String.Empty, String.Empty);
-
+                            commentSymbol = new Tuple<string, string>(startCommentSymbol, endCommentSymbol);
                             extensions.Add(fileExtension, commentSymbol);
                         }
                     }

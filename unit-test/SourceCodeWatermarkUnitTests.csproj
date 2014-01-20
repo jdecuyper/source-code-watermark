@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="nunit\nunit.framework.dll" />
+    <Content Include="Ressources\ExtCodeSymbols-Tabs.txt" />
     <Content Include="Ressources\ExtCodeSymbols-ExtraEmptyLines.txt" />
     <Content Include="Ressources\ExtCodeSymbols-1-ExtraSpaces.txt" />
     <Content Include="Ressources\ExtCodeSymbols-2.txt" />
