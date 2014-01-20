@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace SourceCodeWaterMark
 {
@@ -16,6 +17,7 @@ namespace SourceCodeWaterMark
     {
         private Dictionary<string, Tuple<string, string>> extensions = new Dictionary<string, Tuple<string, string>>();
         private bool fileWasLoaded = true;
+        private string[] fileExtensionsRegex;
 
         public FileExtensionAndCodeSymbol(string fileSettingsPath)
         {
@@ -44,12 +46,14 @@ namespace SourceCodeWaterMark
                     while (sr.Peek() >= 0)
                     {
                         string line = sr.ReadLine();
-                        if (line.Contains(' '))
+                        List<string> words = line.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries).Select(p => Regex.Replace(p, @" |\t|\n|\r", "")).ToList();
+
+                        if (words.Count >= 2)
                         {
-                            List<string> words = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                            string fileExtension = words[0];
 
                             // If the extension already exists, it is not overwritten
-                            if (extensions.ContainsKey(words[0]))
+                            if (extensions.ContainsKey(fileExtension))
                                 continue;
 
                             Tuple<string, string> commentSymbol;
@@ -60,18 +64,29 @@ namespace SourceCodeWaterMark
                             else
                                 commentSymbol = new Tuple<string, string>(String.Empty, String.Empty);
 
-                            extensions.Add(words[0], commentSymbol);
+                            extensions.Add(fileExtension, commentSymbol);
                         }
                     }
                 }
+
+                // Keep track of the support file extensions
+                fileExtensionsRegex = extensions.Keys.Select(ext => String.Format("*.{0}", ext)).ToArray();
             }
         }
 
-        public Dictionary<string, Tuple<string, string>> Extensions
+        public Dictionary<string, Tuple<string, string>> ExtensionsAndCodeSymbols
         {
             get
             {
                 return extensions;
+            }
+        }
+
+        public string[] Extensions
+        {
+            get
+            {
+                return fileExtensionsRegex;
             }
         }
 

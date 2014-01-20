@@ -11,8 +11,9 @@ namespace SourceCodeWaterMark
         private string _folderPath = String.Empty;
         private bool _folderPathIsValid = true;
         private int _filesToProcess = 0;
+        private FileExtensionAndCodeSymbol _fileSettings;
 
-        public FolderToWatermark(string folderPath) {
+        public FolderToWatermark(string folderPath, FileExtensionAndCodeSymbol fileSettings) {
             
             if (String.IsNullOrEmpty(folderPath)) {
                 _folderPathIsValid = false;
@@ -25,13 +26,17 @@ namespace SourceCodeWaterMark
                 return;
             }
 
+            if (fileSettings != null)
+                _fileSettings = fileSettings;
+
             _folderPath = folderPath;
+
             GetSupportedFiles();
         }
 
         private void GetSupportedFiles() {
             DirectoryInfo di = new DirectoryInfo(_folderPath);
-            FileInfo[] fi = new string[] { "*.ascx", "*.cs" }
+            FileInfo[] fi = _fileSettings.Extensions
                 .SelectMany(i => di.GetFiles(i, SearchOption.AllDirectories))
                 .Distinct().ToArray();
             _filesToProcess = fi.Count();
@@ -45,7 +50,8 @@ namespace SourceCodeWaterMark
         }
 
         public void AddWaterMark() {
-            // 
+            // what if the release number already exists inside a file?
+            // what if some file raises an error when reading or writing?
         }
     }
 }

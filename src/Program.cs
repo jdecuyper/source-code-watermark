@@ -46,6 +46,7 @@ namespace SourceCodeWaterMark
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.Black;
 
+            // obtain release number
             bool releaseNumberIsValid = false;
             string releaseNumber = String.Empty;
 
@@ -75,6 +76,7 @@ namespace SourceCodeWaterMark
                 releaseNumberIsValid = true;
             }
 
+            // obtain folder to process
             bool folderExists = false;
             string folderPath = String.Empty;
 
@@ -102,10 +104,9 @@ namespace SourceCodeWaterMark
 
                 folderExists = true;
             }
-            
-            // what if the release number already exists inside a file?
-            // what if some file raises an error when reading or writing?
 
+
+            // start watermarking process
             Console.WriteLine(String.Empty);
             Console.WriteLine("# Start to watermark files with release v." + releaseNumber);
             Console.WriteLine("# Read valid extension list");
@@ -113,19 +114,32 @@ namespace SourceCodeWaterMark
             string fileSettingsAbsPath = Environment.CurrentDirectory + "\\" + fileWithExtensionsName;
             FileExtensionAndCodeSymbol fileSettings = new FileExtensionAndCodeSymbol(fileSettingsAbsPath);
 
-            if (fileSettings.SettingFileWasLoaded)
+            if (fileSettings.SettingFileWasLoaded && fileSettings.ExtensionsAndCodeSymbols.Count > 0)
             {
-                Dictionary<string, Tuple<string, string>> ext = fileSettings.Extensions;
+                Dictionary<string, Tuple<string, string>> ext = fileSettings.ExtensionsAndCodeSymbols;
 
                 foreach (KeyValuePair<string, Tuple<string, string>> kvp in ext)
                 {
                     Console.WriteLine(kvp.Key + " - " + kvp.Value.Item1 + " - " + kvp.Value.Item2);
                 }
 
-                FolderToWatermark wFolder = new FolderToWatermark(folderPath);
+                FolderToWatermark wFolder = new FolderToWatermark(folderPath, fileSettings);
                 Console.WriteLine("# Files to process: " + wFolder.FilesToProcess);
             }
-            else {
+            else if (fileSettings.SettingFileWasLoaded && fileSettings.ExtensionsAndCodeSymbols.Count == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("# Settings file is empty or invalid.");
+                Console.WriteLine("# Settings file should be called ExtensionsAndCodeSymbols.txt and located next to the executable.");
+                Console.WriteLine("# It should contain at least one valid file extension and comment symbol, for instance:");
+                Console.WriteLine(String.Empty); 
+                Console.WriteLine("  cs   //");
+                Console.WriteLine("  js   /* */");
+                Console.WriteLine(String.Empty);
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else
+            {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("# Settings file could not be loaded or is invalid.");
                 Console.WriteLine("# Settings file should be called ExtensionsAndCodeSymbols.txt and located next to the executable.");
