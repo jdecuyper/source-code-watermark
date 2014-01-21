@@ -48,8 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\FileExtensionTest.cs" />
+    <Compile Include="API\CommentSymbolsTest.cs" />
+    <Compile Include="API\FolderToWatermarkTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ressources\FolderToWaterMark\Class1.cs" />
+    <Compile Include="Ressources\FolderToWaterMark\Class2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -70,6 +73,10 @@
     <Content Include="Ressources\CommentSymbols-1.txt" />
     <Content Include="Ressources\CommentSymbols-InvalidFormat.txt" />
     <Content Include="Ressources\CommentSymbols-Empty.txt" />
+    <Content Include="Ressources\FolderToWaterMark\CommentSymbols.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Ressources\FolderToWaterMark\FolderIsEmpty\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

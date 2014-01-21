@@ -11,39 +11,31 @@ namespace SourceCodeWaterMark
     public class FolderToWatermark
     {
         private string _folderPath = String.Empty;
-        private bool _folderPathIsValid = true;
+        private bool _filesWereWatermarked = false;
         private int _filesToProcessCount = 0;
         private CodeCommentSymbols _codeComments;
         FileInfo[] _filesToProcess;
+        HashSet<int> threadIds = new HashSet<int>();
 
         public FolderToWatermark(string folderPath, CodeCommentSymbols codeComments)
         {
-            
-            if (String.IsNullOrEmpty(folderPath)) {
-                _folderPathIsValid = false;
-                return;
-            }
+            if (String.IsNullOrEmpty(folderPath))
+                throw new Exception("Folder path is empty");
 
             if (!Directory.Exists(folderPath))
-            {
-                _folderPathIsValid = false;
-                return;
-            }
+                throw new Exception("Folder path does not exist");
 
-            if (codeComments != null)
-                _codeComments = codeComments;
-
+            if (codeComments == null || codeComments.CommentSymbols.Count == 0)
+                throw new Exception("No code comment symbols are available");
+            
+            _codeComments = codeComments;
             _folderPath = folderPath;
-
+            
             ReadFilesInsideFolder();
-            AddWaterMarkToFiles();
         }
 
         private void ReadFilesInsideFolder()
         {
-            if (!_folderPathIsValid)
-                return;
-
             DirectoryInfo dirInfo = new DirectoryInfo(_folderPath);
             _filesToProcess = _codeComments.FileExtensions
                 .SelectMany(i => dirInfo.GetFiles(i, SearchOption.AllDirectories))
@@ -51,16 +43,12 @@ namespace SourceCodeWaterMark
             _filesToProcessCount = _filesToProcess.Count();
         }
 
-        public int FilesToProcessCount
-        {
-            get{
-                return _filesToProcessCount;
-            }
-        }
-
+        /// <summary>
+        /// To avoid multiple watermarking of the same files, this method can only run once. 
+        /// </summary>
         public void AddWaterMarkToFiles() {
 
-            if (!_folderPathIsValid)
+            if (_filesWereWatermarked)
                 return;
 
             // TODO
@@ -72,9 +60,35 @@ namespace SourceCodeWaterMark
                 // Divide work between multiple threads 
                 Parallel.ForEach(_filesToProcess, fileInfo =>
                 {
-
+                    threadIds.Add(Thread.CurrentThread.ManagedThreadId);
                     Console.WriteLine(Thread.CurrentThread.ManagedThreadId + " - " + fileInfo.Name);
                 });
+            }
+
+            _filesWereWatermarked = true;
+        }
+
+        public int FilesToProcessCount
+        {
+            get
+            {
+                return _filesToProcessCount;
+            }
+        }
+
+        public int FilesProcessedCount
+        {
+            get
+            {
+                return 0;
+            }
+        }
+
+        public int ThreadsUsedToProcessFiles
+        {
+            get
+            {
+                return threadIds.Count();
             }
         }
     }

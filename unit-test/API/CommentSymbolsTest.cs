@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SourceCodeWatermarkUnitTests.API
 {
-    public class FileExtensionTest
+    public class CommentSymbolsTest
     {
         [Test]
         public void SettingsFileDoesNotExist()
