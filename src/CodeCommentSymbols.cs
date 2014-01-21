@@ -53,7 +53,7 @@ namespace SourceCodeWaterMark
 
                         if (words.Count >= 2)
                         {
-                            string fileExtension = words[0];
+                            string fileExtension = words[0].StartsWith(".") ? words[0] : String.Format(".{0}", words[0]);
                             string startCommentSymbol = words[1];
                             string endCommentSymbol = words.Count == 2 ? String.Empty : words[2];
 
@@ -69,7 +69,7 @@ namespace SourceCodeWaterMark
                 }
 
                 // Keep track of the support file extensions
-                _fileExtensionsRegex = _commentSymbols.Keys.Select(ext => String.Format("*.{0}", ext)).ToArray();
+                _fileExtensionsRegex = _commentSymbols.Keys.Select(ext => String.Format("*{0}", ext)).ToArray();
             }
         }
 

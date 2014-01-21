@@ -43,9 +43,9 @@ namespace SourceCodeWatermarkUnitTests.API
         {
             CodeCommentSymbols fileSettings = new CodeCommentSymbols(Environment.CurrentDirectory + "\\..\\..\\Ressources\\CommentSymbols-1.txt");
             Assert.AreEqual(1, fileSettings.CommentSymbols.Count());
-            Assert.IsNotNull(fileSettings.CommentSymbols["css"]);
-            Assert.AreEqual("/*", fileSettings.CommentSymbols["css"].Item1);
-            Assert.AreEqual("*/", fileSettings.CommentSymbols["css"].Item2);
+            Assert.IsNotNull(fileSettings.CommentSymbols[".css"]);
+            Assert.AreEqual("/*", fileSettings.CommentSymbols[".css"].Item1);
+            Assert.AreEqual("*/", fileSettings.CommentSymbols[".css"].Item2);
         }
 
         [Test]
@@ -53,9 +53,9 @@ namespace SourceCodeWatermarkUnitTests.API
         {
             CodeCommentSymbols fileSettings = new CodeCommentSymbols(Environment.CurrentDirectory + "\\..\\..\\Ressources\\CommentSymbols-1-ExtraSpaces.txt");
             Assert.AreEqual(1, fileSettings.CommentSymbols.Count());
-            Assert.IsNotNull(fileSettings.CommentSymbols["css"]);
-            Assert.AreEqual("/*", fileSettings.CommentSymbols["css"].Item1);
-            Assert.AreEqual("*/", fileSettings.CommentSymbols["css"].Item2);
+            Assert.IsNotNull(fileSettings.CommentSymbols[".css"]);
+            Assert.AreEqual("/*", fileSettings.CommentSymbols[".css"].Item1);
+            Assert.AreEqual("*/", fileSettings.CommentSymbols[".css"].Item2);
         }
 
         [Test]
@@ -63,13 +63,13 @@ namespace SourceCodeWatermarkUnitTests.API
         {
             CodeCommentSymbols fileSettings = new CodeCommentSymbols(Environment.CurrentDirectory + "\\..\\..\\Ressources\\CommentSymbols-2.txt");
             Assert.AreEqual(2, fileSettings.CommentSymbols.Count());
-            Assert.IsNotNull(fileSettings.CommentSymbols["cs"]);
-            Assert.AreEqual("//", fileSettings.CommentSymbols["cs"].Item1);
-            Assert.AreEqual(String.Empty, fileSettings.CommentSymbols["cs"].Item2);
+            Assert.IsNotNull(fileSettings.CommentSymbols[".cs"]);
+            Assert.AreEqual("//", fileSettings.CommentSymbols[".cs"].Item1);
+            Assert.AreEqual(String.Empty, fileSettings.CommentSymbols[".cs"].Item2);
 
-            Assert.IsNotNull(fileSettings.CommentSymbols["js"]);
-            Assert.AreEqual("/*", fileSettings.CommentSymbols["js"].Item1);
-            Assert.AreEqual("*/", fileSettings.CommentSymbols["js"].Item2);
+            Assert.IsNotNull(fileSettings.CommentSymbols[".js"]);
+            Assert.AreEqual("/*", fileSettings.CommentSymbols[".js"].Item1);
+            Assert.AreEqual("*/", fileSettings.CommentSymbols[".js"].Item2);
         }
 
         [Test]
@@ -77,9 +77,9 @@ namespace SourceCodeWatermarkUnitTests.API
         {
             CodeCommentSymbols fileSettings = new CodeCommentSymbols(Environment.CurrentDirectory + "\\..\\..\\Ressources\\CommentSymbols-ExtraEmptyLines.txt");
             Assert.AreEqual(6, fileSettings.CommentSymbols.Count());
-            Assert.IsNotNull(fileSettings.CommentSymbols["master"]);
-            Assert.AreEqual(fileSettings.CommentSymbols["master"].Item1, "<%--");
-            Assert.AreEqual(fileSettings.CommentSymbols["master"].Item2, "--%>");
+            Assert.IsNotNull(fileSettings.CommentSymbols[".master"]);
+            Assert.AreEqual(fileSettings.CommentSymbols[".master"].Item1, "<%--");
+            Assert.AreEqual(fileSettings.CommentSymbols[".master"].Item2, "--%>");
         }
 
         [Test]
@@ -87,14 +87,14 @@ namespace SourceCodeWatermarkUnitTests.API
         {
             CodeCommentSymbols fileSettings = new CodeCommentSymbols(Environment.CurrentDirectory + "\\..\\..\\Ressources\\CommentSymbols-Tabs.txt");
             Assert.AreEqual(2, fileSettings.CommentSymbols.Count());
-            
-            Assert.IsNotNull(fileSettings.CommentSymbols["css"]);
-            Assert.AreEqual(fileSettings.CommentSymbols["css"].Item1, "/*");
-            Assert.AreEqual(fileSettings.CommentSymbols["css"].Item2, "*/");
 
-            Assert.IsNotNull(fileSettings.CommentSymbols["cs"]);
-            Assert.AreEqual(fileSettings.CommentSymbols["cs"].Item1, "//");
-            Assert.AreEqual(fileSettings.CommentSymbols["cs"].Item2, String.Empty);
+            Assert.IsNotNull(fileSettings.CommentSymbols[".css"]);
+            Assert.AreEqual(fileSettings.CommentSymbols[".css"].Item1, "/*");
+            Assert.AreEqual(fileSettings.CommentSymbols[".css"].Item2, "*/");
+
+            Assert.IsNotNull(fileSettings.CommentSymbols[".cs"]);
+            Assert.AreEqual(fileSettings.CommentSymbols[".cs"].Item1, "//");
+            Assert.AreEqual(fileSettings.CommentSymbols[".cs"].Item2, String.Empty);
         }
         
     }

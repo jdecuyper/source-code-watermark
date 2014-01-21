@@ -2,6 +2,7 @@
 using SourceCodeWaterMark;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,40 @@ namespace SourceCodeWatermarkUnitTests.API
             Assert.AreEqual(0, folderToMark.FilesToProcessCount);
             Assert.AreEqual(0, folderToMark.ThreadsUsedToProcessFiles);
             Assert.AreEqual(0, folderToMark.FilesProcessedCount);
+        }
+
+        [Test]
+        public void SomeFilesInFolder()
+        {
+            CodeCommentSymbols fileSettings = new CodeCommentSymbols(Environment.CurrentDirectory + "\\..\\..\\Ressources\\FolderToWaterMark\\CommentSymbols.txt");
+            FolderToWatermark folderToMark = new FolderToWatermark(Environment.CurrentDirectory + "\\..\\..\\Ressources\\FolderToWaterMark\\SomeFilesToRead", fileSettings);
+
+            Assert.AreEqual(3, folderToMark.FilesToProcessCount);
+            Assert.AreEqual(0, folderToMark.FilesProcessedCount);
+        }
+
+        [Test]
+        public void WatermarkValidFiles()
+        {
+            // Copy non watermarked files over
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory + "\\..\\..\\Ressources\\FolderToWaterMark\\SomeFilesToRead"))
+                File.Copy(file, Path.Combine(Environment.CurrentDirectory + "\\..\\..\\Ressources\\FolderToWaterMark\\SomeFilesToWatermark", Path.GetFileName(file)), true);
+
+            CodeCommentSymbols fileSettings = new CodeCommentSymbols(Environment.CurrentDirectory + "\\..\\..\\Ressources\\FolderToWaterMark\\CommentSymbols.txt");
+            FolderToWatermark folderToMark = new FolderToWatermark(Environment.CurrentDirectory + "\\..\\..\\Ressources\\FolderToWaterMark\\SomeFilesToWatermark", fileSettings);
+
+            Assert.AreEqual(3, folderToMark.FilesToProcessCount);
+            Assert.AreEqual(0, folderToMark.FilesProcessedCount);
+
+            folderToMark.WaterMarkFiles();
+
+            Assert.AreEqual(0, folderToMark.FilesToProcessCount);
+            Assert.AreEqual(3, folderToMark.FilesProcessedCount);
+            Assert.AreNotEqual(0, folderToMark.ThreadsUsedToProcessFiles);
+
+            // Delete watermarked files
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory + "\\..\\..\\Ressources\\FolderToWaterMark\\SomeFilesToWatermark"))
+                File.Delete(file);
         }
     }
 }
