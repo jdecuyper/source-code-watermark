@@ -3,6 +3,8 @@ source-code-watermark
 
 Utility to add release number to source code files.
 
+![Alt text](/img/AddWatermarkToSourceCode.png "Add watermark to source code")
+
 Supported comment symbols and file extensions are contained inside `src/CommentSymbols.txt`.
 The watermark text can be found and edited inside `src/Watermark.txt`. A place-holder exists for the provided release number (`RELEASE_NUMBER`) and for the date (`TIMESTAMP`). 
 

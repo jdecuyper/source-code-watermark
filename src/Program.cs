@@ -26,13 +26,13 @@ namespace SourceCodeWaterMark
             Console.WriteLine("*                                                   *");
             Console.WriteLine("*  The process will only update the file with       *");
             Console.WriteLine("*  the extensions contained inside the following    *");
-            Console.WriteLine("*  file: Extensions.txt. The comment symbols can    *");
-            Console.WriteLine("*  also be edited inside that file.                 *");
+            Console.WriteLine("*  file: CodeCommentsSymbols.txt. The comment       *");
+            Console.WriteLine("*  symbols can also be edited inside that same      *");
+            Console.WriteLine("*  file.                                            *");
             Console.WriteLine("*                                                   *"); 
             Console.WriteLine("*  The watermark format can be edited inside        *");
             Console.WriteLine("*  Watermark.txt                                    *");
             Console.WriteLine("*                                                   *"); 
-            Console.WriteLine("*  Changes cannot be reverted.                      *");
             Console.WriteLine("*                                                   *");
             Console.WriteLine("*  Author: https://github.com/jdecuyper             *");
             Console.WriteLine("*  Date: 2014-01-09                                 *");
