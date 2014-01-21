@@ -58,8 +58,12 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CommentSymbols.txt" />
-    <Content Include="Watermark.txt" />
+    <Content Include="CommentSymbols.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Watermark.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
