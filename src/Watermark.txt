@@ -1,1 +1,1 @@
-﻿Software version RELEASE_NUMBER (TIMESTAMP)
+﻿Copyright © https://github.com/jdecuyper, release RELEASE_NUMBER (TIMESTAMP)

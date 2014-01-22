@@ -73,6 +73,7 @@
     <Content Include="Ressources\CommentSymbols-1.txt" />
     <Content Include="Ressources\CommentSymbols-InvalidFormat.txt" />
     <Content Include="Ressources\CommentSymbols-Empty.txt" />
+    <Content Include="Ressources\Watermark.txt" />
     <Content Include="Ressources\FolderToWaterMark\CommentSymbols.txt" />
     <Content Include="Ressources\FolderToWaterMark\SomeFilesToRead\Stylesheet.css" />
   </ItemGroup>

@@ -38,15 +38,12 @@ namespace SourceCodeWaterMark
             Console.WriteLine("*  Date: 2014-01-09                                 *");
             Console.WriteLine("*                                                   *"); 
             Console.WriteLine("*****************************************************");
-
             Console.Write("\n\n");
 
-            // add a couple of new lines to separate the banner
-            // from the rest of the text
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.Black;
 
-            // obtain release number
+            // Ask for release number
             bool releaseNumberIsValid = false;
             string releaseNumber = String.Empty;
 
@@ -76,7 +73,7 @@ namespace SourceCodeWaterMark
                 releaseNumberIsValid = true;
             }
 
-            // obtain folder to process
+            // Ask for folder name
             bool folderExists = false;
             string folderPath = String.Empty;
 
@@ -105,47 +102,43 @@ namespace SourceCodeWaterMark
                 folderExists = true;
             }
 
-
-            // start watermarking process
+            // Start watermarking process
             Console.WriteLine(String.Empty);
             Console.WriteLine("# Start to watermark files with release v." + releaseNumber);
             Console.WriteLine("# Read valid extension list");
+            
             string fileSettingsAbsPath = Environment.CurrentDirectory + "\\" + CodeCommentSymbols.SETTINGS_FILE_NAME;
             CodeCommentSymbols codeComments = new CodeCommentSymbols(fileSettingsAbsPath);
+            
+            Console.WriteLine("# Read watermark");
+            Watermark mark = new Watermark(Environment.CurrentDirectory + "\\" + Watermark.WATERMARK_FILE_NAME, releaseNumber);
 
-            if (codeComments.SettingFileWasLoaded && codeComments.CommentSymbols.Count > 0)
+            if (mark.TextLines.Count > 0)
             {
-                Dictionary<string, Tuple<string, string>> ext = codeComments.CommentSymbols;
+                FolderToWatermark folderToProcess = new FolderToWatermark(folderPath, codeComments, mark);
+                Console.WriteLine("# Files to process: " + folderToProcess.FilesToProcessCount);
 
-                foreach (KeyValuePair<string, Tuple<string, string>> kvp in ext)
+                Console.WriteLine("# Start watermarking files...");
+                folderToProcess.WaterMarkFiles();
+                Console.WriteLine("# Watermarking has finished");
+
+                // Print result
+                Console.WriteLine("# Threads used to process files: " + folderToProcess.ThreadsUsedToProcessFiles);
+                Console.WriteLine("# Processed files: " + folderToProcess.FilesProcessedCount);
+
+                if (folderToProcess.FilesThatCouldNotBeProcessed.Count > 0)
                 {
-                    Console.WriteLine(kvp.Key + " - " + kvp.Value.Item1 + " - " + kvp.Value.Item2);
+                    Console.WriteLine("# Files that could not be processed: " + folderToProcess.FilesThatCouldNotBeProcessed.Count);
+                    Console.WriteLine("# Check FilesThatCouldNotBeProcessed.txt for list of non processed files");
                 }
-
-                FolderToWatermark wFolder = new FolderToWatermark(folderPath, codeComments);
-                Console.WriteLine("# Files to process: " + wFolder.FilesToProcessCount);
             }
-            else if (codeComments.SettingFileWasLoaded && codeComments.CommentSymbols.Count == 0)
-            {
+            else {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("# Settings file is empty or invalid.");
-                Console.WriteLine(String.Format("# Settings file should be called {0} and located next to the executable.", CodeCommentSymbols.SETTINGS_FILE_NAME));
-                Console.WriteLine("# It should contain at least one valid file extension and comment symbol, for instance:");
-                Console.WriteLine(String.Empty); 
-                Console.WriteLine("  cs   //");
-                Console.WriteLine("  js   /* */");
-                Console.WriteLine(String.Empty);
+                Console.WriteLine("No watermark could be found.");
                 Console.ForegroundColor = ConsoleColor.White;
             }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("# Settings file could not be loaded or is invalid.");
-                Console.WriteLine(String.Format("# Settings file should be called {0} and located next to the executable.", CodeCommentSymbols.SETTINGS_FILE_NAME));
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-
-            Console.Write("# Press any key to exit...");
+            
+            Console.WriteLine("# Press any key to exit...");
             Console.ReadLine();            
         }
     }

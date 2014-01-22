@@ -1,0 +1,1 @@
+﻿Software version RELEASE_NUMBER (TIMESTAMP)

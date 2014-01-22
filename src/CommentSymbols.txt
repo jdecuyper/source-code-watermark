@@ -1,7 +1,12 @@
-﻿css /*       */
-css /* */
+﻿css /* */
 aspx <%-- --%>
-ashx <%-- --%>
+aspx.cs //
+ashx //
+ascx <%-- --%>
+ascx.cs //
 master <%-- --%>
+master.cs //
 cs //
-js /* */
+js  /* */
+xml <!-- -->
+html <!-- -->
