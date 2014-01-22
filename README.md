@@ -38,3 +38,9 @@ Example
 * XML
 
 ![Alt text](/img/XML.png "XML file")
+
+
+Further work
+============
+* Find out if last line of a file is a line break. If it is not the case then add 2 line separators between the content and the watermark. This would make the result more consistent because as it is now there is not always a space between the content and the watermark.
+* Allow the watermark to be added at the top of the file in a efficient way.
