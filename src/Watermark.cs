@@ -84,7 +84,7 @@ namespace SourceCodeWaterMark
                 watermark.Append(commentSymbols.Item1 + Environment.NewLine);
                 foreach (string text in _textLines)
                 {
-                    watermark.Append(text);
+                    watermark.Append(" " + text);
                     watermark.Append(Environment.NewLine);
                 }
                 watermark.Append(commentSymbols.Item2);

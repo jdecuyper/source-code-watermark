@@ -128,8 +128,10 @@ namespace SourceCodeWaterMark
 
                 if (folderToProcess.FilesThatCouldNotBeProcessed.Count > 0)
                 {
-                    Console.WriteLine("# Files that could not be processed: " + folderToProcess.FilesThatCouldNotBeProcessed.Count);
-                    Console.WriteLine("# Check FilesThatCouldNotBeProcessed.txt for list of non processed files");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Files that could not be processed: " + folderToProcess.FilesThatCouldNotBeProcessed.Count);
+                    Console.WriteLine("Check FilesThatCouldNotBeProcessed.txt for list of non processed files");
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
             }
             else {

@@ -18,3 +18,23 @@ Files are processed using the [Parallel Loop pattern](http://msdn.microsoft.com/
 The watermark is appended at the bottom of each file using a `MemoryStream`. The `Stream.CopyTo` method avoids to read the whole file into memory. The buffer size is calculated for each watermark.
 
 The project includes a couple of unit tests that can be run on Windows using `unit-test/run-nunit-tests.bat` (assuming you have NUnit installed and available in your path).
+
+
+Example
+=======
+
+* ASPX
+
+![Alt text](/img/aspx.png "ASPX file")
+
+* CSharp
+
+![Alt text](/img/cs.png "CSharp file")
+
+* CSS
+
+![Alt text](/img/css.png "CSS file")
+
+* XML
+
+![Alt text](/img/xml.png "XML file")
