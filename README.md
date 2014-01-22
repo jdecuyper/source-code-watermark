@@ -37,4 +37,4 @@ Example
 
 * XML
 
-![Alt text](/img/xml.png "XML file")
+![Alt text](/img/XML.png "XML file")
